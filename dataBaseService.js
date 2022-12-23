@@ -1,4 +1,5 @@
 import sqlite3 from "sqlite3";
+//npm install sqlite3
 
 export default class DataBaseService{
     constructor(query = "", type = types.run){
@@ -10,7 +11,7 @@ export default class DataBaseService{
 	
     _createTables(){
         const querys = []
-        //querys.push("CREATE TABLE IF NOT EXISTS YOUR_TABLE (id INTEGER PRIMARY KEY AUTOINCREMENT, ...)");
+        // querys.push("CREATE TABLE IF NOT EXISTS your_table_name (id INTEGER PRIMARY KEY AUTOINCREMENT, ... )");
 
         querys.forEach(element => {
             const db = new sqlite3.Database(this._dbPath, (err) => {
@@ -19,6 +20,7 @@ export default class DataBaseService{
                     if(err) console.log(`Error add create table: ${err.message}`);
                 });
             })
+            this._closeDb(db);
         });
     }
 
@@ -31,6 +33,7 @@ export default class DataBaseService{
                     resolve("ok");
                 })
             })
+            this._closeDb(db);
         })
     }
 
@@ -44,6 +47,7 @@ export default class DataBaseService{
                     resolve(rows);
                 })
             })
+            this._closeDb(db);
         })
     }
 
@@ -56,7 +60,11 @@ export default class DataBaseService{
                     resolve(row);
                 })
             })
+            this._closeDb(db);
         })
+    }
+    _closeDb(db){
+        db.close();
     }
 
     startTransaction(arrayData = []){
@@ -72,11 +80,4 @@ export default class DataBaseService{
         }
     }
 
-}
-
-//Specifies the type of transaction
-export const types = {
-    all: "a0mSdk23sd",
-    get: "qNwAdlw321a",
-    run: "h78eIa1Nv"
 }
