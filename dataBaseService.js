@@ -81,3 +81,9 @@ export default class DataBaseService{
     }
 
 }
+
+export const types = {
+    all: "a0mSdk23sd",
+    get: "qNwAdlw321a",
+    run: "h78eIa1Nv"
+}
